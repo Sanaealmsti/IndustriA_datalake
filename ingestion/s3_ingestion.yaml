@@ -1,0 +1,25 @@
+source:
+  type: s3
+  serviceName: minio-industriA
+  serviceConnection:
+    config:
+      type: S3
+      awsConfig:
+        awsAccessKeyId: minioadmin
+        awsSecretAccessKey: minioadmin
+        awsRegion: us-east-1
+        endPointURL: http://localhost:9000
+  sourceConfig:
+    config:
+      type: StorageMetadata
+
+sink:
+  type: metadata-rest
+  config: {}
+
+workflowConfig:
+  openMetadataServerConfig:
+    hostPort: http://localhost:8585/api
+    authProvider: openmetadata
+    securityConfig:
+      jwtToken: "eyJraWQiOiJHYjM4OWEtOWY3Ni1nZGpzLWE5MmotMDI0MmJrOTQzNTYiLCJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJvcGVuLW1ldGFkYXRhLm9yZyIsInN1YiI6ImluZ2VzdGlvbi1ib3QiLCJlbWFpbCI6ImluZ2VzdGlvbi1ib3RAb3Blbm1ldGFkYXRhLm9yZyIsImlzQm90Ijp0cnVlLCJ0b2tlblR5cGUiOiJCT1QiLCJpYXQiOjE3ODM1MTE1MDQsImV4cCI6bnVsbH0.dd1vsbAayqILa2GiTyiVbEESWNkdbE_aU68pvWDJ9QS4dMD_HpdWXg1GOeiLn5TBwpsFwdVnCab1GtTKcjmsIXhejsTeE6FCICBcmC71II_doMThadvXBWf1MKxCDVgNtC-nCg4il3OkiHPFoDtbn0FnT2PMuD3Pvc_StmQrCQ4uRBQPMZPTOU5jL7PIJonyqlrZGcHa73TrbBbKJO9Z6Y5KmDZoGo9o-5BSsDiA1VZqcKZpN9iAVQFATaBsSHu_t_GF5v6XHCRxn2j86C9Cg7T2-Rz0-cvCimLjahC2tNRkVU3yfTbD5Khv9Vg41R3pRgYuVT0QRsLShsDiRmKYqg"

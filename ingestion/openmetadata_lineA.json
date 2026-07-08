@@ -1,0 +1,9 @@
+{
+  "entries": [
+    {
+      "dataPath": "production_lines/lineA/year=2025/month=05/LineA_Stable_10K.csv",
+      "structureFormat": "csv",
+      "separator": ","
+    }
+  ]
+}

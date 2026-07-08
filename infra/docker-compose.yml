@@ -13,3 +13,57 @@ services:
     volumes:
       - ./minio-data:/data
     command: server /data --console-address ":9001"
+
+
+  airflow:
+    image: apache/airflow:2.6.3
+    container_name: airflow
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+      _PIP_ADDITIONAL_REQUIREMENTS: "pandas boto3 openmetadata-ingestion==1.1.1.1"
+    volumes:
+      - ../dags:/opt/airflow/dags
+      - ../data:/opt/airflow/data
+    command: standalone
+    
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: openmetadata_db
+      MYSQL_USER: openmetadata
+      MYSQL_PASSWORD: openmetadata
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+
+  openmetadata:
+    image: openmetadata/server:1.2.0
+    container_name: openmetadata
+    ports:
+      - "8585:8585"
+    depends_on:
+      - mysql
+      - elasticsearch
+    environment:
+      DB_DRIVER_CLASS: com.mysql.cj.jdbc.Driver
+      DB_SCHEME: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: openmetadata
+      DB_USER_PASSWORD: openmetadata
+      OM_DATABASE: openmetadata_db
+      ELASTICSEARCH_HOST: elasticsearch
+      ELASTICSEARCH_PORT: 9200
+    restart: on-failure
