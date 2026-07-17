@@ -1,16 +1,14 @@
 import boto3
 import os
 
-client = boto3.client(
-    "s3",
+client = boto3.client("s3",
     endpoint_url="http://localhost:9000",
     aws_access_key_id="minioadmin",
     aws_secret_access_key="minioadmin")
 
 DATA_DIR = "data"
 
-lignes = {
-    "LineA_Stable_10K.csv": "lineA",
+lignes = {"LineA_Stable_10K.csv": "lineA",
     "LineB_Flux.csv": "lineB",
     "LineC_Turbulent.csv": "lineC",
     "LineD_SpikeControl.csv": "lineD",

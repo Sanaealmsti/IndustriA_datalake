@@ -1,38 +1,10 @@
 # Architecture du Data Lake — IndustriA
 
-valeurs manquantes traitees. Pret pour lanalyse exploratoire.
-
-
-
-**Curated**
-
-Donnees agregees et enrichies, directement utilisables par les data scientists
-
-pour entrainer un modele de maintenance predictive.
-
-
-
-**Archive**
-
-Donnees de plus de 180 jours, conservees pour audit et conformite.
-
-Suppression automatique apres 2 ans via les regles ILM de MinIO.
-
-
-
-## Justification
-
-
-
-Les donnees des 5 lignes ont des schemas heterogenes (casse des colonnes differente,
-
+Les données des 5 lignes ont des schémas hétérogènes (casse des colonnes différente,
 champ elapsed_time absent sur certaines lignes). Sans une architecture en couches,
-
-un data scientist qui travaille sur ces donnees obtiendrait des erreurs ou des
-
-resultats inexplicables. La couche staging resout ce probleme en harmonisant
-
-tous les schemas avant toute analyse.
+un data scientist qui travaille sur ces données obtiendrait des erreurs ou des
+résultats inexplicables. Les couches de données résouent ce problème en harmonisant
+tous les schémas avant toute analyse.
 
 ## Structure des buckets MinIO
 

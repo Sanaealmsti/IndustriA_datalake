@@ -1,12 +1,10 @@
 import boto3
 import json
 
-client = boto3.client(
-    "s3",
+client = boto3.client("s3",
     endpoint_url="http://localhost:9000",
     aws_access_key_id="minioadmin",
-    aws_secret_access_key="minioadmin"
-)
+    aws_secret_access_key="minioadmin")
 
 def creer_policy(bucket, actions):
     return json.dumps({
@@ -15,9 +13,7 @@ def creer_policy(bucket, actions):
             "Effect": "Allow",
             "Principal": "*",
             "Action": actions,
-            "Resource": [f"arn:aws:s3:::{bucket}/*"]
-        }]
-    })
+            "Resource": [f"arn:aws:s3:::{bucket}/*"]}]})
 
 for bucket in ["raw", "staging"]:
     client.put_bucket_policy(Bucket=bucket, Policy=creer_policy(bucket, ["s3:GetObject", "s3:PutObject"]))
